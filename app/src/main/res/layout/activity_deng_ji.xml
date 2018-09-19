@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/bgbg"
+    android:layout_height="match_parent"
+    tools:context="megvii.testfacepass.ui.DengJiActivity">
+
+    <ImageView
+        android:id="@+id/fffff"
+        android:src="@drawable/logo"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="10px"
+        android:layout_width="200px"
+        android:layout_height="50px" />
+
+
+        <LinearLayout
+            android:layout_marginTop="48px"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:background="@drawable/yuan"
+                    android:layout_width="20px"
+                    android:layout_marginLeft="100px"
+                    android:layout_height="20px" />
+
+
+                    <TextView
+                        android:text="填写访客信息"
+                        android:textColor="@color/white"
+                        android:textSize="18px"
+                        android:layout_marginLeft="16px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="30px"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/t1"
+                    android:textColor="@color/white"
+                    android:textSize="16px"
+                    android:text="姓名"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="16px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48px" />
+                <EditText
+                    android:id="@+id/e1"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16px"
+                    android:paddingLeft="52px"
+                    android:background="@drawable/xian"
+                    android:layout_width="248px"
+                    android:layout_height="48px" />
+
+
+                <TextView
+                    android:id="@+id/t2"
+                    android:textColor="@color/white"
+                    android:textSize="16px"
+                    android:text="手机"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="20px"
+                    android:layout_below="@+id/e1"
+                    android:layout_marginLeft="16px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48px" />
+
+                <EditText
+                    android:layout_below="@+id/e1"
+                    android:id="@+id/e2"
+                    android:layout_marginTop="20px"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16px"
+                    android:paddingLeft="52px"
+                    android:background="@drawable/xian"
+                    android:layout_width="248px"
+                    android:layout_height="48px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/t3"
+                    android:textColor="@color/white"
+                    android:textSize="16px"
+                    android:text="公司"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="16px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48px" />
+                <EditText
+                    android:id="@+id/e3"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16px"
+                    android:paddingLeft="52px"
+                    android:background="@drawable/xian"
+                    android:layout_width="248px"
+                    android:layout_height="48px" />
+
+
+                <TextView
+                    android:id="@+id/t4"
+                    android:textColor="@color/white"
+                    android:textSize="16px"
+                    android:text="事由"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="20px"
+                    android:layout_below="@+id/e3"
+                    android:layout_marginLeft="16px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48px" />
+
+                <EditText
+                    android:layout_below="@+id/e3"
+                    android:id="@+id/e4"
+                    android:layout_marginTop="20px"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16px"
+                    android:paddingLeft="52px"
+                    android:background="@drawable/xian"
+                    android:layout_width="248px"
+                    android:layout_height="48px" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30px"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:background="@drawable/yuan"
+            android:layout_width="20px"
+            android:layout_marginLeft="100px"
+            android:layout_height="20px" />
+
+
+        <TextView
+            android:text="填写被访人信息"
+            android:textColor="@color/white"
+            android:textSize="18px"
+            android:layout_marginLeft="16px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/t5"
+                android:textColor="@color/white"
+                android:textSize="16px"
+                android:text="姓名"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="16px"
+                android:layout_width="wrap_content"
+                android:layout_height="48px" />
+            <EditText
+                android:id="@+id/e5"
+                android:textColor="@color/textcolor"
+                android:textSize="16px"
+                android:paddingLeft="52px"
+                android:background="@drawable/xian"
+                android:layout_width="248px"
+                android:layout_height="48px" />
+
+
+            <TextView
+                android:id="@+id/t6"
+                android:textColor="@color/white"
+                android:textSize="16px"
+                android:text="手机"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20px"
+                android:layout_below="@+id/e5"
+                android:layout_marginLeft="16px"
+                android:layout_width="wrap_content"
+                android:layout_height="48px" />
+
+            <EditText
+                android:layout_below="@+id/e5"
+                android:id="@+id/e6"
+                android:layout_marginTop="20px"
+                android:textColor="@color/textcolor"
+                android:textSize="16px"
+                android:paddingLeft="52px"
+                android:background="@drawable/xian"
+                android:layout_width="248px"
+                android:layout_height="48px" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/t7"
+                android:textColor="@color/white"
+                android:textSize="16px"
+                android:text="公司"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="16px"
+                android:layout_width="wrap_content"
+                android:layout_height="48px" />
+            <EditText
+                android:id="@+id/e7"
+                android:textColor="@color/textcolor"
+                android:textSize="16px"
+                android:paddingLeft="52px"
+                android:background="@drawable/xian"
+                android:layout_width="248px"
+                android:layout_height="48px" />
+
+
+            <TextView
+                android:id="@+id/t8"
+                android:textColor="@color/white"
+                android:textSize="16px"
+                android:text="楼层"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20px"
+                android:layout_below="@+id/e7"
+                android:layout_marginLeft="16px"
+                android:layout_width="wrap_content"
+                android:layout_height="48px" />
+
+            <EditText
+                android:layout_below="@+id/e7"
+                android:id="@+id/e8"
+                android:layout_marginTop="20px"
+                android:textColor="@color/textcolor"
+                android:textSize="16px"
+                android:paddingLeft="52px"
+                android:background="@drawable/xian"
+                android:layout_width="248px"
+                android:layout_height="48px" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="50px"
+        android:layout_height="wrap_content">
+        <Button
+            android:textSize="18px"
+            android:text="提交"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/jiaohu3"
+            android:layout_width="140px"
+            android:layout_height="50px" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

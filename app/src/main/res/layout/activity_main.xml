@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/bgbg"
+    android:layout_height="match_parent"
+    tools:context="megvii.testfacepass.ui.MainActivity">
+
+    <ImageView
+        android:src="@drawable/logo"
+        android:layout_marginTop="10px"
+        android:layout_marginLeft="10px"
+        android:layout_width="260px"
+        android:layout_height="60px" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="180px"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="46px"
+                android:id="@+id/text1"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_marginTop="10px"
+                android:textSize="80px"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:background="#1e000000"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="200px">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:id="@+id/l1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="40px"
+                android:text="1"
+                android:gravity="center"
+                android:background="@drawable/tuoyuan"
+                android:textColor="@color/white"
+                android:layout_width="70px"
+                android:layout_height="90px" />
+
+            <TextView
+                android:textSize="22px"
+                android:text="预约访客"
+                android:layout_marginTop="4px"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/l2"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="40px"
+                android:text="2"
+                android:gravity="center"
+                android:background="@drawable/tuoyuan"
+                android:textColor="@color/white"
+                android:layout_width="70px"
+                android:layout_height="90px" />
+
+            <TextView
+                android:textSize="22px"
+                android:layout_marginTop="4px"
+                android:text="零时访客"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/l3"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="40px"
+                android:text="3"
+                android:gravity="center"
+                android:background="@drawable/tuoyuan"
+                android:textColor="@color/white"
+                android:layout_width="70px"
+                android:layout_height="90px" />
+
+            <TextView
+                android:textSize="22px"
+                android:layout_marginTop="4px"
+                android:text="人工服务"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

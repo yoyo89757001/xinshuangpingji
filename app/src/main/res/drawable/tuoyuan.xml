@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 椭圆填充-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"
+    android:useLevel="true">
+
+    <size
+        android:width="120dp"
+        android:height="150dp" />
+
+
+    <gradient
+        android:centerX="0.5"
+        android:centerY="0.5"
+        android:centerColor="#800015ff"
+        android:endColor="#000800ff"
+        android:startColor="#1900ff"
+        android:gradientRadius="90dp"
+        android:type="radial" />
+
+</shape>
