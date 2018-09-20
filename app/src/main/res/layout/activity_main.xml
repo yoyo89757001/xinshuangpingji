@@ -8,6 +8,7 @@
 
     <ImageView
         android:src="@drawable/logo"
+        android:visibility="invisible"
         android:layout_marginTop="10px"
         android:layout_marginLeft="10px"
         android:layout_width="260px"

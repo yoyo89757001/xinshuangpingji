@@ -202,7 +202,7 @@ public class DengJiActivity extends AppCompatActivity {
                 //  .addFormDataPart("image_1" , file1Name , fileBody1)
                 /* 上传一个普通的String参数 */
                 .addFormDataPart("photo" , file2Name , fileBody2)
-                 .addFormDataPart("name" , "访客"+(System.currentTimeMillis()+"").substring(9,13))
+                 .addFormDataPart("name" , (userInfoBena.getPartyName().equals("")?"访客"+(System.currentTimeMillis()+"").substring(9,13):userInfoBena.getPartyName()))
                 .addFormDataPart("subject_type" , "1")
                 .addFormDataPart("start_time", (System.currentTimeMillis()+"").substring(0,10))
                 .addFormDataPart("end_time" , ((System.currentTimeMillis()+31536000000L)+"").substring(0,10))

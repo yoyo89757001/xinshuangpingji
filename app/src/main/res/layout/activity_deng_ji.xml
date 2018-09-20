@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/fffff"
+        android:visibility="invisible"
         android:src="@drawable/logo"
         android:layout_marginLeft="10px"
         android:layout_marginTop="10px"
