@@ -48,6 +48,7 @@
         <LinearLayout
             android:layout_weight="1"
             android:id="@+id/l1"
+            android:visibility="gone"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -80,7 +81,7 @@
             android:layout_height="match_parent">
             <TextView
                 android:textSize="40px"
-                android:text="2"
+                android:text="1"
                 android:gravity="center"
                 android:background="@drawable/tuoyuan"
                 android:textColor="@color/white"
@@ -90,7 +91,7 @@
             <TextView
                 android:textSize="22px"
                 android:layout_marginTop="4px"
-                android:text="零时访客"
+                android:text="临时访客"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -106,7 +107,7 @@
 
             <TextView
                 android:textSize="40px"
-                android:text="3"
+                android:text="2"
                 android:gravity="center"
                 android:background="@drawable/tuoyuan"
                 android:textColor="@color/white"

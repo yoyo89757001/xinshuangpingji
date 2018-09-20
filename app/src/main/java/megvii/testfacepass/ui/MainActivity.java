@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         if (baoCunBean == null) {
             baoCunBean = new BaoCunBean();
             baoCunBean.setId(123456L);
-            baoCunBean.setHoutaiDiZhi("http://192.168.2.187:8980/js/f");
+            baoCunBean.setHoutaiDiZhi("http://192.168.2.187");
             baoCunBean.setShibieFaceSize(60);
             baoCunBean.setShibieFaZhi(70);
             baoCunBean.setRuKuFaceSize(50);
@@ -181,6 +182,32 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.l3:
+                l2.setEnabled(false);
+                if (isA){
+                    startActivity(new Intent(MainActivity.this,RActivity.class));
+                }else {
+                    Toast tastyToast = TastyToast.makeText(MainActivity.this, "初始化未完成,请稍后...", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                    tastyToast.setGravity(Gravity.CENTER, 0, 0);
+                    tastyToast.show();
+                }
+                //防止重复点击
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    l2.setEnabled(true);
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }).start();
 
                 break;
         }
@@ -256,6 +283,25 @@ public class MainActivity extends AppCompatActivity {
             isA=true;
 
         }
+    }
+
+    private boolean isAnXia = true;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            isAnXia = true;
+        }
+        if (isAnXia) {
+            if (ev.getPointerCount() == 4) {
+                isAnXia = false;
+                startActivity(new Intent(MainActivity.this, SheZhiActivity2.class));
+                finish();
+            }
+        }
+
+        return super.dispatchTouchEvent(ev);
     }
 
 }

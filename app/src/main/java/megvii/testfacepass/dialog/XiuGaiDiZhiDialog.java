@@ -20,7 +20,7 @@ import megvii.testfacepass.R;
 public class XiuGaiDiZhiDialog extends Dialog {
    // private TextView title2;
     private Button l1,l2;
-    private EditText jiudianname,idid;
+    private EditText idid,zhanghao,mima;
     public XiuGaiDiZhiDialog(Context context) {
         super(context, R.style.dialog_style2);
         setCustomDialog();
@@ -29,7 +29,8 @@ public class XiuGaiDiZhiDialog extends Dialog {
     private void setCustomDialog() {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.xiugaidialog_dizhi, null);
 
-        jiudianname= (EditText) mView.findViewById(R.id.xiangce);
+        zhanghao= (EditText) mView.findViewById(R.id.zhanghao);
+        mima= (EditText) mView.findViewById(R.id.mima);
         idid= (EditText)mView.findViewById(R.id.idid);
        // title2= (TextView) mView.findViewById(R.id.title2);
         l1= (Button)mView. findViewById(R.id.queren);
@@ -41,15 +42,18 @@ public class XiuGaiDiZhiDialog extends Dialog {
     public void setContents(String ss, String s3){
        if (ss!=null)
            idid.setText(ss);
-        if (s3!=null)
-            jiudianname.setText(s3);
     }
 
     public String getUrl(){
         return idid.getText().toString().trim();
     }
 
-
+    public String getZhangHao(){
+        return zhanghao.getText().toString().trim();
+    }
+    public String getMiMa(){
+        return mima.getText().toString().trim();
+    }
 
 
     @Override

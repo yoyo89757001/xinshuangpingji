@@ -1,10 +1,13 @@
 package megvii.testfacepass.beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Administrator on 2017/6/21.
  */
 
-public class UserInfoBena {
+public class UserInfoBena implements Parcelable {
     private String partyName;
     private String gender;
     private String nation;
@@ -135,4 +138,52 @@ public class UserInfoBena {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.partyName);
+        dest.writeString(this.gender);
+        dest.writeString(this.nation);
+        dest.writeString(this.bornDay);
+        dest.writeString(this.certAddress);
+        dest.writeString(this.certNumber);
+        dest.writeString(this.certOrg);
+        dest.writeString(this.effDate);
+        dest.writeString(this.expDate);
+        dest.writeString(this.cardPhoto);
+        dest.writeString(this.scanPhoto);
+        dest.writeString(this.type);
+    }
+
+    protected UserInfoBena(Parcel in) {
+        this.partyName = in.readString();
+        this.gender = in.readString();
+        this.nation = in.readString();
+        this.bornDay = in.readString();
+        this.certAddress = in.readString();
+        this.certNumber = in.readString();
+        this.certOrg = in.readString();
+        this.effDate = in.readString();
+        this.expDate = in.readString();
+        this.cardPhoto = in.readString();
+        this.scanPhoto = in.readString();
+        this.type = in.readString();
+    }
+
+    public static final Parcelable.Creator<UserInfoBena> CREATOR = new Parcelable.Creator<UserInfoBena>() {
+        @Override
+        public UserInfoBena createFromParcel(Parcel source) {
+            return new UserInfoBena(source);
+        }
+
+        @Override
+        public UserInfoBena[] newArray(int size) {
+            return new UserInfoBena[size];
+        }
+    };
 }

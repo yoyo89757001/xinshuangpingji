@@ -23,14 +23,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +36,6 @@ import android.widget.Toast;
 
 import com.badoo.mobile.util.WeakHandler;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.yatoooon.screenadaptation.ScreenAdapterTools;
@@ -52,20 +49,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.com.aratek.idcard.IDCard;
-import cn.com.aratek.idcard.IDCardReader;
-import cn.com.aratek.util.Result;
 import io.objectbox.Box;
 import megvii.facepass.FacePassException;
 import megvii.facepass.FacePassHandler;
@@ -85,8 +73,7 @@ import megvii.testfacepass.camera.CameraManager;
 import megvii.testfacepass.camera.CameraPreview;
 import megvii.testfacepass.camera.CameraPreviewData;
 import megvii.testfacepass.cookies.CookiesManager;
-import megvii.testfacepass.dialog.BuTongGuoDialog;
-import megvii.testfacepass.dialog.JiaZaiDialog;
+import megvii.testfacepass.dialog.RenGongDialog;
 import megvii.testfacepass.dialog.TongGuoDialog;
 import megvii.testfacepass.utils.GsonUtil;
 import megvii.testfacepass.utils.SettingVar;
@@ -106,7 +93,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 
-public class LingShiFangKeActivity extends Activity implements CameraManager.CameraListener {
+public class RActivity extends Activity implements CameraManager.CameraListener {
 
 
     /* 程序所需权限 ：相机 文件存储 网络访问 */
@@ -116,24 +103,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
     private static final String PERMISSION_READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String PERMISSION_INTERNET = Manifest.permission.INTERNET;
     private static final String PERMISSION_ACCESS_NETWORK_STATE = Manifest.permission.ACCESS_NETWORK_STATE;
-    @BindView(R.id.im1)
-    ImageView im1;
-    @BindView(R.id.im2)
-    ImageView im2;
-    @BindView(R.id.xingming)
-    TextView xingming;
-    @BindView(R.id.xingbie)
-    TextView xingbie;
-    @BindView(R.id.mingzu)
-    TextView mingzu;
-    @BindView(R.id.chusheng)
-    TextView chusheng;
-    @BindView(R.id.haoma)
-    TextView haoma;
-    @BindView(R.id.zhuzhi)
-    TextView zhuzhi;
-    @BindView(R.id.xiangsidu)
-    TextView xiangsidu;
+    private ImageView imageView;
 
     private RequestOptions myOptions = new RequestOptions()
             .fitCenter()
@@ -145,21 +115,17 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
             .fitCenter()
             .error(R.drawable.erroy_bg)
             //   .transform(new GlideCircleTransform(MyApplication.myApplication, 2, Color.parseColor("#ffffffff")));
-            .transform(new GlideRoundTransform(LingShiFangKeActivity.this, 20));
-
-    private static int count=0;
+            .transform(new GlideRoundTransform(RActivity.this, 20));
 
     private RelativeLayout relativeLayout;
     private final Timer timer = new Timer();
     private TimerTask task;
     public static final int TIMEOUT = 1000 * 30;
-    private String shengfenzhengPath = null;
     private String xianchengzhaoPath = null;
     private static final String DEBUG_TAG = "FacePassDemo";
     private static boolean isLink = true;
     private static final String group_name = "face-pass-test-x";
     private UserInfoBena userInfoBena = null;
-    private JiaZaiDialog jiaZaiDialog = null;
     /* SDK 实例对象 */
     private FacePassHandler mFacePassHandler;
     /* 相机实例 */
@@ -194,10 +160,6 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
     private TimeChangeReceiver timeChangeReceiver;
     private WeakHandler mHandler;
     private TextView tishi;
-    private static boolean isTrue = true;
-    private static boolean isTrue2 = true;
-    private IDCardReader mReader;
-    private Thread thread;
     private OkHttpClient okHttpClient=null;
 
 
@@ -214,11 +176,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
 
         baoCunBeanDao = MyApplication.myApplication.getBoxStore().boxFor(BaoCunBean.class);
         baoCunBean = baoCunBeanDao.get(123456L);
-        mReader = IDCardReader.getInstance();
-        mReader.powerOn();
-        mReader.open();
         isLink=true;
-        count=0;
         //每分钟的广播
         intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_TIME_TICK);//每分钟变化
@@ -236,16 +194,10 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
         dw = dm.widthPixels;
         dh = dm.heightPixels;
 
+        userInfoBena=new UserInfoBena();
+        userInfoBena.setPartyName("");
+
         initView();
-//        dibuliebiao.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
-//                    @Override
-//                    public void onGlobalLayout(){
-//                        //只需要获取一次高度，获取后移除监听器
-//                        dibuliebiao.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//
-//                    }
-//
-//                });
 
         mFeedFrameThread = new FeedFrameThread();
         mFeedFrameThread.start();
@@ -266,114 +218,16 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
             }
         });
 
-
-        long now = SystemClock.uptimeMillis();
-        Log.d("LingShiFangKeActivity", "now:" + now);
-        Log.d("LingShiFangKeActivity", "now % 1000:" + (now % 1000));
-        long next = now + (1000 - now % 1000);// 够不够一秒,保证一秒更新一次
-        Log.d("LingShiFangKeActivity", "next:" + next);
-
-
-        jiaZaiDialog = new JiaZaiDialog(LingShiFangKeActivity.this);
-        jiaZaiDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        if (!LingShiFangKeActivity.this.isFinishing())
-            jiaZaiDialog.show();
-
-        startReadCard();
-
         mFacePassHandler = MyApplication.myApplication.getFacePassHandler();
         if (baoCunBean.getZhanghao()==null || baoCunBean.getMima()==null){
-            Toast tastyToast = TastyToast.makeText(LingShiFangKeActivity.this, "请先设置主机账号和密码", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+            Toast tastyToast = TastyToast.makeText(RActivity.this, "请先设置主机账号和密码", TastyToast.LENGTH_LONG, TastyToast.ERROR);
             tastyToast.setGravity(Gravity.CENTER, 0, 0);
             tastyToast.show();
         }else {
             denglu();
         }
-
     }
 
-
-    private void startReadCard() {
-        isTrue = true;
-        isTrue2 = true;
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while (isTrue) {
-                    if (isTrue2) {
-                        isTrue2 = false;
-                        try {
-                            Result res = mReader.read();
-                            if (res.error == IDCardReader.RESULT_OK) {
-                                try {
-                                    showPeopleInfo((IDCard) res.data);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            } else if (res.error == IDCardReader.NO_CARD) {
-                                isTrue2 = true;
-                            } else {
-                                Toast tastyToast = TastyToast.makeText(LingShiFangKeActivity.this, "读卡出现错误", TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                                tastyToast.setGravity(Gravity.CENTER, 0, 0);
-                                tastyToast.show();
-                            }
-                            Thread.sleep(600);
-                        } catch (Exception e) {
-                            isTrue = false;
-                            Log.d("SerialReadActivity", e.getMessage());
-
-                        }
-
-                    }
-
-                }
-            }
-
-        });
-        thread.start();
-    }
-
-
-
-    /***
-     *保存bitmap对象到文件中
-     * @param bm
-     * @param path
-     * @param quality
-     * @return
-     */
-    public void saveBitmap2File(Bitmap bm, final String path, int quality) {
-        if (null == bm || bm.isRecycled()) {
-            Log.d("InFoActivity", "回收|空");
-            return;
-        }
-        try {
-            File file = new File(path);
-            if (file.exists()) {
-                file.delete();
-            }
-            BufferedOutputStream bos = new BufferedOutputStream(
-                    new FileOutputStream(file));
-            bm.compress(Bitmap.CompressFormat.JPEG, quality, bos);
-            bos.flush();
-            bos.close();
-
-            shengfenzhengPath = path;
-            userInfoBena.setCardPhoto(shengfenzhengPath);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-
-            if (!bm.isRecycled()) {
-                bm.recycle();
-            }
-            bm = null;
-        }
-    }
 
     /***
      *保存bitmap对象到文件中
@@ -413,43 +267,6 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
         }
     }
 
-    private void showPeopleInfo(final IDCard card) {
-        isTrue = false;
-        if (!LingShiFangKeActivity.this.isFinishing())
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                    xingming.setText(card.getName());
-                    xingbie.setText(card.getSex().toString());
-                    mingzu.setText(card.getNationality().toString());
-                    chusheng.setText(df.format(card.getBirthday()));
-                    zhuzhi.setText(card.getAddress());
-                    haoma.setText(card.getNumber());
-                    //   fazhengjiguan.setText(card.getAuthority());
-                    //  youxiaoqixian.setText(df.format(card.getValidFrom()) + " 到 " + (card.getValidTo() == null ? "长期" : df.format(card.getValidTo())));
-                    //  mFinger.setText(card.isSupportFingerprint() ? R.string.exist : R.string.not_exist);//指纹
-                    if (card.getPhoto() != null) {
-                        im1.setImageBitmap(card.getPhoto());
-                        String fn = "aaaa.jpg";
-                        FileUtil.isExists(FileUtil.PATH, fn);
-                        userInfoBena = new UserInfoBena(card.getName(), card.getSex().toString().equals("男") ? 1 + "" : 2 + "", card.getNationality().toString(),
-                                df.format(card.getBirthday()), card.getAddress(), card.getNumber(), card.getAuthority(), df.format(card.getValidFrom()), df.format(card.getValidTo()), null, null, null);
-
-                        saveBitmap2File(card.getPhoto().copy(Bitmap.Config.ARGB_8888, false), FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
-
-                    }
-                    if (jiaZaiDialog != null && jiaZaiDialog.isShowing()) {
-                        jiaZaiDialog.dismiss();
-                        jiaZaiDialog = null;
-                    }
-
-
-                }
-            });
-
-        mReader.close();
-    }
 
 
     /* 判断程序是否有所需权限 android22以上需要自申请权限 */
@@ -558,14 +375,12 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                             if (FacePassRecognitionResultType.RECOG_OK == result.facePassRecognitionResultType) {
                                 //识别的
 
-
                             } else {
 
                                 //未识别的
                                 // ConcurrentHashMap 建议用他去重
                                 //   detectionResult.faceList
                                 Log.d("RecognizeThread", "未识别的" + result.trackId);
-
                             }
 
                         }
@@ -625,9 +440,9 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
             screenState = 0;
         }
 
-        setContentView(R.layout.activity_mianbanji);
+        setContentView(R.layout.activity_rengong);
         ScreenAdapterTools.getInstance().loadView(getWindow().getDecorView());
-        ButterKnife.bind(this);
+      //  ButterKnife.bind(this);
         AssetManager mgr = getAssets();
         Typeface tf = Typeface.createFromAsset(mgr, "fonts/Univers LT 57 Condensed.ttf");
         Typeface tf2 = Typeface.createFromAsset(mgr, "fonts/hua.ttf");
@@ -643,15 +458,11 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
         manager = new CameraManager();
         cameraView = findViewById(R.id.preview);
         manager.setPreviewDisplay(cameraView);
+        imageView=findViewById(R.id.im1);
         /* 注册相机回调函数 */
         manager.setListener(this);
-        relativeLayout = findViewById(R.id.rlrl);
         tishi = findViewById(R.id.tishi);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
-        params.width = dw * 12 / 20;
-        params.height = dh * 16 / 20;
-        relativeLayout.setLayoutParams(params);
-        relativeLayout.invalidate();
+
 
     }
 
@@ -663,8 +474,6 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
         if (manager != null) {
             manager.release();
         }
-        isTrue2 = false;
-        isTrue = false;
 
         super.onStop();
     }
@@ -729,7 +538,6 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
             public void run() {
                 faceView.clear();
                 for (FacePassFace face : result) {
-
 
                     boolean mirror = cameraFacingFront; /* 前摄像头时mirror为true */
 //                    StringBuilder faceIdString = new StringBuilder();
@@ -824,11 +632,9 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                     float pitch = face.pose.pitch;
                     float roll = face.pose.roll;
                     float yaw = face.pose.yaw;
-                    if (shengfenzhengPath == null) {
-                        return;
-                    }
+
                     if (pitch < 15 && pitch > -15 && roll < 15 && roll > -15 && yaw < 15 && yaw > -15 && face.blur < 0.2) {
-                        if (shengfenzhengPath != null && isLink) {
+                        if ( isDL&&isLink) {
                             isLink = false;
                             new Thread(new Runnable() {
                                 @Override
@@ -850,66 +656,19 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                                         y2 = (srect2.top + (srect2.bottom - srect2.top)) > bitmap.getHeight() ? (int) (bitmap.getHeight() - srect2.top) : (int) (srect2.bottom - srect2.top);
 
                                         final Bitmap oneBitmap1 = Bitmap.createBitmap(bitmap, x1, y1, x2, y2);
-                                        float xiangsiduee = 0;
-                                        try {
-                                         xiangsiduee= mFacePassHandler.compare(BitmapFactory.decodeFile(shengfenzhengPath), oneBitmap1, false).score;
-                                        } catch (FacePassException e) {
-                                            e.printStackTrace();
-                                            isLink=true;
-                                        }
-                                        if (xiangsiduee>=72){
-                                            String fn = "bbbb.jpg";
+                                            String fn = "ccccc.jpg";
                                             FileUtil.isExists(FileUtil.PATH, fn);
                                             saveBitmap2File2(oneBitmap1.copy(Bitmap.Config.ARGB_8888, false), FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
                                             //质量判断
-                                            if (isDL){
-                                                zhiliang(xianchengzhaoPath);
-                                            }else {
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        Toast tastyToast= TastyToast.makeText(LingShiFangKeActivity.this,"未登录后台主机,请检查网络或账号密码",TastyToast.LENGTH_LONG,TastyToast.ERROR);
-                                                        tastyToast.setGravity(Gravity.CENTER,0,0);
-                                                        tastyToast.show();
-                                                    }
-                                                });
-                                            }
+                                        zhiliang(xianchengzhaoPath);
 
-                                        }else {
-                                            count++;
-                                            if (count>3){
-                                                count=0;
-                                                //比对不通过
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        final BuTongGuoDialog dialog=new BuTongGuoDialog(LingShiFangKeActivity.this);
-                                                        dialog.setCanceledOnTouchOutside(false);
-                                                        dialog.setOnPositiveListener(new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View v) {
-                                                                dialog.dismiss();
-                                                                EventBus.getDefault().post("guanbi");
-                                                            }
-                                                        });
-                                                        dialog.show();
-                                                    }
-                                                });
-
-                                            }else {
-                                                isLink=true;
-                                            }
-
-                                        }
-                                        final float finalXiangsiduee = xiangsiduee;
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                im2.setImageBitmap(oneBitmap1);
-                                                xiangsidu.setText("相似度: "+finalXiangsiduee);
-
+                                                    imageView.setImageBitmap(oneBitmap1);
                                             }
                                         });
+
 
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -923,7 +682,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
 
                         //提示
                         tishi.setVisibility(View.VISIBLE);
-                        tishi.setText("识别中,请稍后...");
+                        tishi.setText("抓拍中,请稍后...");
                     } else {
                         tishi.setVisibility(View.VISIBLE);
                         tishi.setText("请正对镜头");
@@ -971,7 +730,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
     public void onDataSynEvent(String event) {
         if (event.equals("mFacePassHandler")) {
             mFacePassHandler = MyApplication.myApplication.getFacePassHandler();
-            Toast tastyToast = TastyToast.makeText(LingShiFangKeActivity.this, event, TastyToast.LENGTH_LONG, TastyToast.INFO);
+            Toast tastyToast = TastyToast.makeText(RActivity.this, event, TastyToast.LENGTH_LONG, TastyToast.INFO);
             tastyToast.setGravity(Gravity.CENTER, 0, 0);
             tastyToast.show();
         }
@@ -1028,7 +787,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast tastyToast= TastyToast.makeText(LingShiFangKeActivity.this,"登陆后台出错!",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                        Toast tastyToast= TastyToast.makeText(RActivity.this,"登陆后台出错!",TastyToast.LENGTH_LONG,TastyToast.ERROR);
                         tastyToast.setGravity(Gravity.CENTER,0,0);
                         tastyToast.show();
                     }
@@ -1052,7 +811,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                        runOnUiThread(new Runnable() {
                            @Override
                            public void run() {
-                               Toast tastyToast= TastyToast.makeText(LingShiFangKeActivity.this,"登陆后台出错,无法进行后续任务",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                               Toast tastyToast= TastyToast.makeText(RActivity.this,"登陆后台出错,无法进行后续任务",TastyToast.LENGTH_LONG,TastyToast.ERROR);
                                tastyToast.setGravity(Gravity.CENTER,0,0);
                                tastyToast.show();
                            }
@@ -1112,13 +871,13 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                             @Override
                             public void run() {
                                 //通过
-                                final TongGuoDialog dialog=new TongGuoDialog(LingShiFangKeActivity.this);
+                                final RenGongDialog dialog=new RenGongDialog(RActivity.this);
                                 dialog.setCanceledOnTouchOutside(false);
                                 dialog.setOnPositiveListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         dialog.dismiss();
-                                        Intent intent=new Intent(LingShiFangKeActivity.this,DengJiActivity.class);
+                                        Intent intent=new Intent(RActivity.this,DengJiActivity.class);
                                         Bundle bundle=new Bundle();
                                         bundle.putParcelable("xinxi",userInfoBena);
                                         intent.putExtras(bundle);
@@ -1133,7 +892,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                xiangsidu.setText("入库质量未达标");
+                                tishi.setText("入库质量未达标");
                             }
                         });
                         isLink=true;

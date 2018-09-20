@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clipChildren="false"
+    android:background="@drawable/bgbg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/fffff"
+        android:src="@drawable/logo"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="10px"
+        android:layout_width="200px"
+        android:layout_height="50px" />
+
+        <RelativeLayout
+            android:id="@+id/rlrl"
+            android:padding="2dp"
+            android:background="@drawable/zidonghuoqu333"
+            android:layout_below="@+id/fffff"
+            android:layout_margin="40px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <megvii.testfacepass.camera.CameraPreview
+                    android:id="@+id/preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical" />
+
+                <megvii.testfacepass.view.FaceView
+                    android:id="@+id/fcview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            
+            <TextView
+                android:textColor="@color/white"
+                android:textSize="30px"
+                android:gravity="center"
+                android:id="@+id/tishi"
+                android:visibility="gone"
+                android:background="@drawable/zidonghuoqu333"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40px"
+                android:layout_width="240px"
+                android:layout_height="72px" />
+
+        </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/im1"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="20px"
+        android:layout_width="180px"
+        android:layout_height="180px" />
+
+
+</RelativeLayout>

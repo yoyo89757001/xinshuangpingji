@@ -280,6 +280,7 @@
         <Button
             android:textSize="18px"
             android:text="提交"
+            android:id="@+id/tijiao"
             android:gravity="center"
             android:textColor="@color/white"
             android:background="@drawable/jiaohu3"

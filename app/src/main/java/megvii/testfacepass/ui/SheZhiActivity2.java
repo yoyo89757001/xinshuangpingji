@@ -79,14 +79,7 @@ public class SheZhiActivity2 extends Activity {
     private static final String group_name = "face-pass-test-x";
     private Box<BaoCunBean> baoCunBeanDao = null;
     private BaoCunBean baoCunBean = null;
-   // public OkHttpClient okHttpClient = null;
-    private ArrayList<JsonBean> options1Items = new ArrayList<>();//省
-    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();//市
-    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();//区
-    private Box<ChengShiIDBean> chengShiIDBeanBox;
-    private static String usbPath = null;
-    private int shibai;
-    private Box<Subject> subjectBox=MyApplication.myApplication.getBoxStore().boxFor(Subject.class);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +90,11 @@ public class SheZhiActivity2 extends Activity {
         //在setContentView();后面加上适配语句
         ScreenAdapterTools.getInstance().loadView(getWindow().getDecorView());
         baoCunBeanDao = MyApplication.myApplication.getBoxStore().boxFor(BaoCunBean.class);
-        chengShiIDBeanBox = MyApplication.myApplication.getBoxStore().boxFor(ChengShiIDBean.class);
         baoCunBean = baoCunBeanDao.get(123456L);
         if (baoCunBean == null) {
             baoCunBean = new BaoCunBean();
             baoCunBean.setId(123456L);
-            baoCunBean.setHoutaiDiZhi("http://192.168.2.187:8980/js/f");
+            baoCunBean.setHoutaiDiZhi("http://192.168.2.187");
             baoCunBean.setShibieFaceSize(60);
             baoCunBean.setShibieFaZhi(70);
             baoCunBean.setRuKuFaceSize(50);
@@ -113,7 +105,6 @@ public class SheZhiActivity2 extends Activity {
             baoCunBean.setTianQi(false);
             baoCunBeanDao.put(baoCunBean);
         }
-
 
         EventBus.getDefault().register(this);//订阅
         switchs.setChecked(true);
@@ -137,12 +128,6 @@ public class SheZhiActivity2 extends Activity {
             }
         });
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                initJsonData();
-//            }
-//        }).start();
 
         if (SettingVar.isSettingAvailable) {
             cameraRotation = SettingVar.faceRotation;
@@ -162,6 +147,8 @@ public class SheZhiActivity2 extends Activity {
                     @Override
                     public void onClick(View v) {
                         baoCunBean.setHoutaiDiZhi(diZhiDialog.getUrl());
+                        baoCunBean.setZhanghao(diZhiDialog.getZhangHao());
+                        baoCunBean.setMima(diZhiDialog.getMiMa());
                         baoCunBeanDao.put(baoCunBean);
                         diZhiDialog.dismiss();
                     }

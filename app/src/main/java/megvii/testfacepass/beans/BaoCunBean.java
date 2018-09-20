@@ -46,6 +46,24 @@ public class BaoCunBean {
     private boolean isTianQi;
     private String shangBanTime;
     private String xiaBanTime;
+    private String zhanghao;
+    private String mima;
+
+    public String getZhanghao() {
+        return zhanghao;
+    }
+
+    public void setZhanghao(String zhanghao) {
+        this.zhanghao = zhanghao;
+    }
+
+    public String getMima() {
+        return mima;
+    }
+
+    public void setMima(String mima) {
+        this.mima = mima;
+    }
 
     public String getShangBanTime() {
         return shangBanTime;
