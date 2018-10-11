@@ -60,6 +60,7 @@
                     android:layout_marginLeft="16px"
                     android:layout_width="wrap_content"
                     android:layout_height="48px" />
+
                 <EditText
                     android:id="@+id/e1"
                     android:textColor="@color/textcolor"
@@ -71,10 +72,10 @@
 
 
                 <TextView
-                    android:id="@+id/t2"
+                    android:id="@+id/t4"
                     android:textColor="@color/white"
                     android:textSize="16px"
-                    android:text="手机"
+                    android:text="事由"
                     android:gravity="center_vertical"
                     android:layout_marginTop="20px"
                     android:layout_below="@+id/e1"
@@ -82,9 +83,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="48px" />
 
-                <EditText
+                <TextView
                     android:layout_below="@+id/e1"
-                    android:id="@+id/e2"
+                    android:id="@+id/e4"
+                    android:gravity="center_vertical"
                     android:layout_marginTop="20px"
                     android:textColor="@color/textcolor"
                     android:textSize="16px"
@@ -119,10 +121,10 @@
 
 
                 <TextView
-                    android:id="@+id/t4"
+                    android:id="@+id/t2"
                     android:textColor="@color/white"
                     android:textSize="16px"
-                    android:text="事由"
+                    android:text="手机"
                     android:gravity="center_vertical"
                     android:layout_marginTop="20px"
                     android:layout_below="@+id/e3"
@@ -132,7 +134,8 @@
 
                 <EditText
                     android:layout_below="@+id/e3"
-                    android:id="@+id/e4"
+                    android:id="@+id/e2"
+                    android:maxLength="11"
                     android:layout_marginTop="20px"
                     android:textColor="@color/textcolor"
                     android:textSize="16px"
@@ -212,6 +215,7 @@
             <EditText
                 android:layout_below="@+id/e5"
                 android:id="@+id/e6"
+                android:maxLength="11"
                 android:layout_marginTop="20px"
                 android:textColor="@color/textcolor"
                 android:textSize="16px"
@@ -260,6 +264,7 @@
             <EditText
                 android:layout_below="@+id/e7"
                 android:id="@+id/e8"
+                android:maxLength="4"
                 android:layout_marginTop="20px"
                 android:textColor="@color/textcolor"
                 android:textSize="16px"

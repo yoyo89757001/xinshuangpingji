@@ -22,7 +22,7 @@
             android:layout_marginTop="14dp"
             android:layout_centerHorizontal="true"
             android:textColor="@color/blake"
-            android:text="入库成功"
+            android:text="登记成功"
             android:id="@+id/fgggg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

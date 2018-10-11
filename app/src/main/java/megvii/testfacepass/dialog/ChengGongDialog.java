@@ -56,7 +56,7 @@ public class ChengGongDialog extends Dialog {
 
     public void setDate(){
         imageView.setBackgroundResource(R.drawable.cha);
-        textView.setText("入库失败");
+        textView.setText("登记失败");
     }
 
 

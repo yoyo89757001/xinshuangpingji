@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/text2"
-                android:layout_marginTop="10px"
+                android:layout_marginTop="20px"
                 android:textSize="80px"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
             <TextView
                 android:textSize="22px"
                 android:layout_marginTop="4px"
-                android:text="临时访客"
+                android:text="人证登记"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -118,7 +118,7 @@
             <TextView
                 android:textSize="22px"
                 android:layout_marginTop="4px"
-                android:text="人工服务"
+                android:text="无证登记"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

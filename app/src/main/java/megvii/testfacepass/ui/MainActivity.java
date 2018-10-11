@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -82,16 +83,20 @@ public class MainActivity extends AppCompatActivity {
             baoCunBean = new BaoCunBean();
             baoCunBean.setId(123456L);
             baoCunBean.setHoutaiDiZhi("http://192.168.2.187");
-            baoCunBean.setShibieFaceSize(60);
+            baoCunBean.setShibieFaceSize(40);
             baoCunBean.setShibieFaZhi(70);
             baoCunBean.setRuKuFaceSize(50);
-            baoCunBean.setRuKuMoHuDu(0.6f);
-            baoCunBean.setHuoTiFZ(70);
+            baoCunBean.setRuKuMoHuDu(0.3f);
+            baoCunBean.setHuoTiFZ(60);
             baoCunBean.setHuoTi(true);
             baoCunBean.setDangqianShiJian("d");
             baoCunBean.setTianQi(false);
             baoCunBeanDao.put(baoCunBean);
+
+            Log.d("MainActivity", "点点滴滴");
         }
+
+
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         int windowRotation = ((WindowManager) (getApplicationContext().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getRotation() * 90;
@@ -124,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
         text1.setTypeface(tf2);
         text1.setText("智能人脸识别");
         text2.setTypeface(tf2);
-        text2.setText("人脸核验系统");
+        text2.setText("智能来访系统");
 
         /* 申请程序所需权限 */
         if (!hasPermission()) {
             requestPermission();
         } else {
             //初始化
-            FacePassHandler.getAuth(authIP, apiKey, apiSecret);
+           // FacePassHandler.getAuth(authIP, apiKey, apiSecret);
             FacePassHandler.initSDK(getApplicationContext());
         }
 

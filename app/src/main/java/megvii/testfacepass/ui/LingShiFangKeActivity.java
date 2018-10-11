@@ -27,8 +27,7 @@ import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -38,7 +37,7 @@ import android.widget.Toast;
 
 import com.badoo.mobile.util.WeakHandler;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
+
 import com.google.gson.JsonObject;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.yatoooon.screenadaptation.ScreenAdapterTools;
@@ -69,6 +68,7 @@ import cn.com.aratek.util.Result;
 import io.objectbox.Box;
 import megvii.facepass.FacePassException;
 import megvii.facepass.FacePassHandler;
+import megvii.facepass.types.FacePassAddFaceResult;
 import megvii.facepass.types.FacePassDetectionResult;
 import megvii.facepass.types.FacePassFace;
 import megvii.facepass.types.FacePassImage;
@@ -853,6 +853,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                                         float xiangsiduee = 0;
                                         try {
                                          xiangsiduee= mFacePassHandler.compare(BitmapFactory.decodeFile(shengfenzhengPath), oneBitmap1, false).score;
+                                            Log.d("LingShiFangKeActivity", "xiangsiduee:" + xiangsiduee);
                                         } catch (FacePassException e) {
                                             e.printStackTrace();
                                             isLink=true;
@@ -1070,43 +1071,14 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
 
 
     private void zhiliang(String xianchengzhaoPath){
-        File file2 = new File(xianchengzhaoPath);
-        RequestBody fileBody2 = RequestBody.create(MediaType.parse("application/octet-stream") , file2);
-        String file2Name =System.currentTimeMillis()+"testFile2.jpg";
-//    /* form的分割线,自己定义 */
-//        String boundary = "xx--------------------------------------------------------------xx";
-        MultipartBody mBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                /* 底下是上传了两个文件 */
-                //  .addFormDataPart("image_1" , file1Name , fileBody1)
-                /* 上传一个普通的String参数 */
-                .addFormDataPart("photo" , file2Name , fileBody2)
-              //  .addFormDataPart("person_id" , idid+"")
-                .build();
-        Request.Builder requestBuilder = new Request.Builder()
-                // .header("Content-Type", "application/json")
-                .post(mBody)
-                .url(baoCunBean.getHoutaiDiZhi() + "/subject/photo/check");
-        // step 3：创建 Call 对象
-        Call call = okHttpClient.newCall(requestBuilder.build());
 
-        //step 4: 开始异步请求
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("AllConnects", "请求识别失败"+e.getMessage());
-                isLink=true;
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("AllConnects", "请求识别成功"+call.request().toString());
-                //获得返回体
-                try {
-                    ResponseBody body = response.body();
-                    String ss=body.string();
-                    Log.d("AllConnects", "比对  "+ss);
-                    JsonObject jsonObject= GsonUtil.parse(ss).getAsJsonObject();
-                    int code=jsonObject.get("code").getAsInt();
+        int code=-1;
+        try {
+            FacePassAddFaceResult result= mFacePassHandler.addFace(BitmapFactory.decodeFile(xianchengzhaoPath));
+            code=result.result;
+        } catch (FacePassException e) {
+            isLink=true;
+        }
                     if (code==0){
                         runOnUiThread(new Runnable() {
                             @Override
@@ -1139,12 +1111,7 @@ public class LingShiFangKeActivity extends Activity implements CameraManager.Cam
                         isLink=true;
                     }
 
-                }catch (Exception e){
-                    isLink=true;
-                    Log.d("WebsocketPushMsg", e.getMessage());
-                }
-            }
-        });
+
 
     }
 
